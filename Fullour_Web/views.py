@@ -7,11 +7,6 @@ from .models import MyUser
 
 from django.http import HttpResponse
 
-@login_required(login_url='login/')
-def index(request):
-    title = 'Home page'
-    return HttpResponse(title)
-
 def login(request):
     if request.user.is_authenticated:
         return redirect('index')
@@ -32,3 +27,8 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('login')
+
+@login_required(login_url='login/')
+def index(request):
+    title = 'Home page'
+    return HttpResponse(title)

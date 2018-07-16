@@ -123,5 +123,3 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'Fullour_Web.MyUser'
 #AUTH_USER_MODEL = 'Fullour_Web.MyUser'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'

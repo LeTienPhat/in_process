@@ -23,9 +23,9 @@ from Fullour_Web import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.index, name='index'),
-    #path('login/', views.login, name='login'),
-    #path('logout/', views.logout, name='logout'),
+    path('', views.index, name='index'),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

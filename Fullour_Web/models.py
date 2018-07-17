@@ -12,7 +12,7 @@ class MyUserManager(BaseUserManager):
         """
         if not email:
             raise ValueError('Users must have an email address')
-
+    
         user = self.model(
             username=username,
             email=self.normalize_email(email),
@@ -35,7 +35,6 @@ class MyUserManager(BaseUserManager):
         user.is_admin = True
         user.save(using=self._db)
         return user
-
 
 class MyUser(AbstractBaseUser):
     username = models.CharField(max_length=70, unique=True)
@@ -77,3 +76,9 @@ class MyUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+'''
+index:
+detail:
+
+'''

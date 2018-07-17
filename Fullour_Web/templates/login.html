@@ -1,38 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Login</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="https://www.hanwha.com/content/dam/hanwha/etc/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="https://www.hanwha.com/content/dam/hanwha/etc/favicon.ico">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-<div class="content">
-    <div class="section-inner clearfix">
-        <h3>Login Form</h3>
+<div class="container h-100 d-flex justify-content-center mt-5">
+    <div class="jumbotron my-auto">
+        {% load static %}
+        <div class="d-flex justify-content-center"><img src="{% static 'images/1.png' %}" alt="My image"></div><br>
+        
         {% if messages %}
-            <ul>
+        <ul>
             {% for message in messages %}
-                <li>{{ message }}</li>
+            <div class="text-danger">{{ message }}</div>
             {% endfor %}
-            </ul>
+        </ul>
         {% endif %}
-
         <form action="" method="post">
             {% csrf_token %}
-            <table>
+            <table class="table table-bordered table-hover">
                 <tr>
                     <td><label for="id_username">Username: </label></td>
-                    <td><input type="text" id="id_username" name="username"></td>
+                    <td><input type="text" id="id_username" name="username" placeholder="Username"></td>
                 </tr>
                 <tr>
                     <td><label for="id_username">Password: </label></td>
-                    <td><input type="password" id="id_password" name="password"></td>
+                    <td><input type="password" id="id_password" name="password" placeholder="Password"></td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td><input type="submit" value="Submit"></td>
+                    <td colspan="2">
+                        <div class="d-flex justify-content-center">
+                            <input type="submit" value="Login" class="d-flex justify-content-center btn btn-secondary">
+                        </div>
+                    </td>
                 </tr>
             </table>
         </form>
     </div>
 </div>
-</body>
 </html>
+</body>

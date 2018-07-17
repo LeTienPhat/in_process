@@ -4,8 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import MyUser
-
+from .models import MyUser, API, InstanceAPI
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
@@ -75,8 +74,8 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('username', 'email', 'view_all', 'password1', 'password2')}
         ),
     )
-    search_fields = ('username',)
-    ordering = ('username',)
+    search_fields = ('username', 'view_all')
+    ordering = ('username', 'view_all')
     filter_horizontal = ()
 
 # Now register the new UserAdmin...
@@ -84,3 +83,21 @@ admin.site.register(MyUser, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
+
+@admin.register(API)
+class APIAdmin(admin.ModelAdmin):
+    list_display = ('api_name', 'api_call_address', \
+        'api_owner', 'api_type', 'api_status')
+    list_filter = ('api_name', 'api_owner', 'api_type', \
+        'api_status')
+    ordering = ('api_name', 'api_owner', 'api_type', \
+        'api_status')
+
+@admin.register(InstanceAPI)
+class InstanceAPIAdmin(admin.ModelAdmin):
+    list_display = ('appID', 'instanceID', 'url_address', \
+        'instance_status', 'using_user', 'usage_apply')
+    list_filter = ('appID', 'instanceID', 'instance_status', \
+        'using_user', 'usage_apply')
+    ordering = ('appID', 'instanceID', 'instance_status', 'using_user', \
+        'usage_apply')

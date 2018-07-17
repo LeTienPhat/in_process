@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
-
+from datetime import datetime
 
 class MyUserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
@@ -49,7 +49,7 @@ class MyUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     view_all = models.BooleanField(default=False)
-    
+
     objects = MyUserManager()
 
     USERNAME_FIELD = 'username'
@@ -77,8 +77,47 @@ class MyUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
-'''
-index:
-detail:
+class API(models.Model):
+    api_name = models.CharField(max_length=64, primary_key=True)
+    api_call_address = models.CharField(max_length=32)
+    api_owner = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    api_release_type = models.CharField(
+        max_length=7,
+        choices=(('public', 'public'), ('private', 'private')),
+        null=True, blank=True,
+    )
+    api_type = models.CharField(
+        max_length=1,
+        choices=(('i', 'interface API'), ('o', 'open API')),
+        null=True, blank=True,
+    )
+    description = models.CharField(max_length=255, null=True, blank=True)
+    create_date = models.DateTimeField(default=datetime.now)
+    last_called_date = models.DateTimeField(default=datetime.now)
+    # registered in eureka or not
+    api_status = models.BooleanField(default=False)
+    def __str__(self):
+        return self.api_name
+    def get_api_name(self):
+        return self.api_name
 
-'''
+class InstanceAPI(models.Model):
+    appID = models.CharField(max_length=32, primary_key=True)
+    instanceID = models.CharField(max_length=32)
+    api_name = models.ForeignKey(API, on_delete=models.CASCADE)
+    url_address = models.CharField(max_length=32)
+    instance_status = models.CharField(
+        max_length=1,
+        choices=(('a', 'active'), ('d', 'deactive')),
+    )
+    
+    using_user = models.ForeignKey(MyUser, on_delete=models.CASCADE,
+        null=True, blank=True)
+    usage_apply = models.CharField(
+        max_length=1,
+        choices=(('r', 'register use'), ('i', 'in use')),
+    )
+    #log_file
+    def __str__(self):
+        return self.appID
+    

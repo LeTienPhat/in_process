@@ -30,5 +30,5 @@ def logout(request):
 
 @login_required(login_url='login/')
 def index(request):
-    title = 'Home page'
-    return HttpResponse(title)
+    title = 'Dashboard'
+    return render(request, 'index.html', {'title':title})

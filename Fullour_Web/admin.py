@@ -87,7 +87,7 @@ admin.site.unregister(Group)
 @admin.register(API)
 class APIAdmin(admin.ModelAdmin):
     list_display = ('api_name', 'api_call_address', \
-        'api_owner', 'api_type', 'api_status')
+        'api_owner', 'api_type', 'api_status', 'create_date')
     list_filter = ('api_name', 'api_owner', 'api_type', \
         'api_status')
     ordering = ('api_name', 'api_owner', 'api_type', \

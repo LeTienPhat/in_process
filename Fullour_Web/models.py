@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
-from datetime import datetime
+from django.utils import timezone
 
 class MyUserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
@@ -92,8 +92,7 @@ class API(models.Model):
         null=True, blank=True,
     )
     description = models.CharField(max_length=255, null=True, blank=True)
-    create_date = models.DateTimeField(default=datetime.now)
-    last_called_date = models.DateTimeField(default=datetime.now)
+    create_date = models.DateTimeField(auto_now=True)
     # registered in eureka or not
     api_status = models.BooleanField(default=False)
     def __str__(self):
@@ -116,7 +115,10 @@ class InstanceAPI(models.Model):
     usage_apply = models.CharField(
         max_length=1,
         choices=(('r', 'register use'), ('i', 'in use')),
+        null=True, blank=True,
     )
+    call_time = models.DateField(blank=True, null=True)
+
     #log_file
     def __str__(self):
         return self.appID

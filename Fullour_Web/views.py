@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from django.http import Http404
 
 from .models import MyUser
 
@@ -31,4 +32,22 @@ def logout(request):
 @login_required(login_url='login/')
 def index(request):
     title = 'Dashboard'
-    return render(request, 'index.html', {'title':title})
+    #username = request.user.username
+    return render(
+        request,
+        'index.html',
+        {'title':title,},
+    )
+
+def users(request):
+    title = 'List of users'
+    users = MyUser.objects.all()
+    return render(request, 'users.html', {'title': title, 'users':users})
+
+def user_detail(request, id):
+    try:
+        title = MyUser.objects.get(id=id).username
+        user_id = MyUser.objects.get(id=id)
+    except MyUser.DoesNotExist:
+        raise Http404('User does not exist')
+    return render(request, 'user_detail.html', {'title':title, 'user_id':user_id})

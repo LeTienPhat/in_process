@@ -15,34 +15,42 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2" style="background: #23282D;">
+            <div class="col-sm" style="background: #23282D;">
                 {% block sidebar %}
                 <ul>
                     <div>
                         {% load static %}
-                        <img src="{% static 'images/2.png' %}" 
+                        <img src="{% static 'images/dashboard.png' %}" 
                             style="width: 9%">
-                        <a href="{% url 'index' %}" class="text-light" >Dashboard</a>
+                        <a href="{% url 'index' %}" class="text-light" style="text-decoration: none">Dashboard</a>
                     </div>
-                    <div class="text-light" style="margin-top: 10%">
+                    {% if user.view_all == True %}
+                    <div>
                         {% load static %}
-                        <img src="{% static 'images/3.png' %}" 
+                        <img src="{% static 'images/list.png' %}" 
+                            style="width: 9%">
+                        <a href="{% url 'users' %}" class="text-light" style="text-decoration: none">
+                            List users
+                        </a>
+                    </div>
+                    {% endif %}
+                    <div class="text-light align-middle" style="margin-top: 10%">
+                        {% load static %}
+                        <img src="{% static 'images/user.png' %}" 
                             style="width: 8%">
-                        {{ user.get_username }}
+                        {{ user.username }}
                     </div>
                     <div>
                         {% load static %}
-                        <img src="{% static 'images/1.svg' %}" 
+                        <img src="{% static 'images/logout.svg' %}" 
                             style="width: 5%">
-                        <a href="{% url 'logout'%}?next={{request.path}}" class="text-light" >&nbsp; Logout</a>
+                        <a href="{% url 'logout'%}" class="text-light" style="text-decoration: none">&nbsp; Logout</a>
                     </div>
-                    
                 </ul>
                 {% endblock %}
             </div>
-            <div class="col-sm-10">
+            <div class="col-sm-10" style="background: #F3F3F3">
                 {% block content %}{% endblock %}
-                
             </div>
         </div>
     </div>

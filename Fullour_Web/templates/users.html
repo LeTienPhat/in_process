@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h2>List users:</h2>
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+        <td>#</td>
+        <td>Username</td>
+        <td>First name</td>
+        <td>Last name</td>
+        <td>Email</td>
+        <td>Date Of Birth</td>
+        <td>
+            <div class="d-flex justify-content-center">
+                View_all
+            </div>
+        </td>
+    </tr>
+    
+    {% for user in users %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>
+                <a href="/user/{{ user.id }}" style="text-decoration: none">
+                {{ user.username }}
+            </a>
+        </td>
+        <td>{{ user.first_name }}</td>
+        <td>{{ user.last_name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.date_of_birth }}</td>
+        {% if user.view_all == True %}
+        <td class="d-flex justify-content-center">
+            {% load static %}
+            <img src="{% static 'images/check.svg' %}" 
+                style="width: 9%">
+                
+        </td>
+        {% else %}
+        <td></td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

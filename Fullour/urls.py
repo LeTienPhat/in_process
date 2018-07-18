@@ -24,6 +24,8 @@ from Fullour_Web import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('users/', views.users, name='users'),
+    path('user/<id>/', views.user_detail, name='user_detail'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
 ]

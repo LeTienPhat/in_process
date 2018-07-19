@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<h2>List users:</h2>
-<table class="table table-bordered table-striped table-hover">
+<div class="mt-3">
+    <h2>List users:</h2>
+    <div class="text-right">
+        <button class="btn btn-primary text-right" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            +
+        </button>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped table-hover mt-1">
     <tr>
         <td>#</td>
         <td>Username</td>
@@ -15,13 +23,18 @@
                 View_all
             </div>
         </td>
+        <td>
+            <div class="d-flex justify-content-center">
+                Action
+            </div>
+        </td>
     </tr>
     
     {% for user in users %}
     <tr>
         <td>{{ user.id }}</td>
         <td>
-                <a href="/user/{{ user.id }}" style="text-decoration: none">
+            <a href="/user/{{ user.id }}" style="text-decoration: none">
                 {{ user.username }}
             </a>
         </td>
@@ -30,16 +43,44 @@
         <td>{{ user.email }}</td>
         <td>{{ user.date_of_birth }}</td>
         {% if user.view_all == True %}
-        <td class="d-flex justify-content-center">
+        <td class="text-center">
             {% load static %}
             <img src="{% static 'images/check.svg' %}" 
                 style="width: 9%">
-                
         </td>
+        
         {% else %}
         <td></td>
         {% endif %}
+        
+        <td class="text-center">
+            <img src="{% static 'images/edit.svg' %}" 
+                style="width: 15%">
+            {% if user.username != request.user.username %}
+            <a href="" id="myBtn">
+                <img src="{% static 'images/trashcan.svg' %}" 
+                    style="width: 12%">
+            </a>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Some text in the modal.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </td>
     </tr>
     {% endfor %}
 </table>
+
 {% endblock %}

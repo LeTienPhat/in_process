@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/build.css' %}">
@@ -19,32 +18,34 @@
                 {% block sidebar %}
                 <ul>
                     <div>
-                        {% load static %}
-                        <img src="{% static 'images/dashboard.png' %}" 
-                            style="width: 9%">
-                        <a href="{% url 'index' %}" class="text-light" style="text-decoration: none">Dashboard</a>
+                        <a href="{% url 'index' %}" class="text-light" style="text-decoration: none">
+                            <img src="{% static 'images/dashboard.png' %}" 
+                                style="width: 9%">
+                            Dashboard
+                        </a>
                     </div>
                     {% if user.view_all == True %}
                     <div>
-                        {% load static %}
-                        <img src="{% static 'images/list.png' %}" 
-                            style="width: 9%">
                         <a href="{% url 'users' %}" class="text-light" style="text-decoration: none">
+                            <img src="{% static 'images/list.png' %}" 
+                                style="width: 9%">
                             List users
                         </a>
                     </div>
                     {% endif %}
                     <div class="text-light align-middle" style="margin-top: 10%">
-                        {% load static %}
-                        <img src="{% static 'images/user.png' %}" 
-                            style="width: 8%">
-                        {{ user.username }}
+                        <a href="/user/{{ request.user.id }}" class="text-light" style="text-decoration: none">
+                            <img src="{% static 'images/user.png' %}" 
+                                style="width: 8%">
+                            {{ user.username }}
+                        </a>
                     </div>
                     <div>
-                        {% load static %}
-                        <img src="{% static 'images/logout.svg' %}" 
-                            style="width: 5%">
-                        <a href="{% url 'logout'%}" class="text-light" style="text-decoration: none">&nbsp; Logout</a>
+                        <a href="{% url 'logout'%}" class="text-light" style="text-decoration: none">
+                            <img src="{% static 'images/logout.svg' %}" 
+                                style="width: 5%">
+                            &nbsp; Logout
+                        </a>
                     </div>
                 </ul>
                 {% endblock %}
@@ -54,6 +55,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#myBtn").click(function(){
+                $("#myModal").modal();
+            });
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     
 </body>
 </html>

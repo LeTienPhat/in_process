@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="mt-3">
+    <h2>Delete User: </h2>
+    Are you sure you want to delete user: <span class="text-danger">{{ user_id.username }}</span> ?
+</div>
+<form action="" method="POST">
+    {% csrf_token %}<div class="text-center">
+    <button class="btn btn-danger" type="submit">Yes, delete</button>
+    <a href="/users/"><button class="btn btn-secondary" type="button">Cancel</button></a></div>
+</form>
+{% endblock %}

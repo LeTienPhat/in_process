@@ -32,7 +32,6 @@ class UserCreationForm(forms.ModelForm):
             user.save()
         return user
 
-
 class UserChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
@@ -50,7 +49,6 @@ class UserChangeForm(forms.ModelForm):
         # field does not have access to the initial value
         return self.initial["password"]
 
-
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
@@ -59,7 +57,7 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('username', 'email', 'view_all', 'is_admin')
+    list_display = ('id', 'username', 'email', 'view_all', 'is_admin')
     list_filter = ('view_all', 'is_admin')
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{{ title }}{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="https://www.hanwha.com/content/dam/hanwha/etc/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="https://www.hanwha.com/content/dam/hanwha/etc/favicon.ico">
     
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/build.css' %}">
@@ -56,13 +58,6 @@
         </div>
     </div>
 
-    <script>
-        $(document).ready(function(){
-            $("#myBtn").click(function(){
-                $("#myModal").modal();
-            });
-        });
-    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     

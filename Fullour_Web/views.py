@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.http import Http404
 from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 
 from .models import MyUser
 from .forms import DeleteUserForm
@@ -42,38 +43,80 @@ def index(request):
         {'title':title,},
     )
 
-def admin_check(self):
-    return self.__class__.objects.filter(view_all=True)
-
 @login_required(login_url='/login/')
-@user_passes_test(admin_check)
+@user_passes_test(lambda u:u.username == 'admin', login_url='/login/')
 def users(request):
     title = 'List of users'
     users = MyUser.objects.filter(is_admin=False)
-    return render(request, 'users.html', {'title': title, 'users':users})
+    return render(request, 'user/list_users.html', {'title': title, 'users':users})
 
 @login_required(login_url='/login/')
-@user_passes_test(admin_check)
 def user_detail(request, id):
     try:
-        title = MyUser.objects.get(id=id).username
+        title = 'Personal Information Of: %s' % MyUser.objects.get(id=id).username
         user_id = MyUser.objects.get(id=id)
+        
+        if (request.user.username == 'admin') or (int(id) == int(request.user.id)):
+            return render(
+                request, 
+                'user/user_detail.html', 
+                {'title':title, 'user_id':user_id,}
+            )
+        else:
+            title = 'Forbidden'
+            current_path = request.get_full_path()
+            return render(
+                request, 
+                'error/forbidden.html', 
+                {'title':title,'current_path':current_path}
+            )
+
     except MyUser.DoesNotExist:
+        title = 'User Not Found'
         current_path = request.get_full_path()
-        return render(request, '404.html', {'current_path':current_path})
-    return render(request, 'user_detail.html', {'title':title, 'user_id':user_id})
+        return render(
+            request, 
+            'error/user_not_found.html', 
+            {'title':title, 'current_path':current_path}
+        )
+
+@login_required(login_url='/login/')
+@user_passes_test(lambda u:u.username == 'admin', login_url='/login/')
+def delete_user(request, id):
+    try:
+        title = 'Delete user: %s' % MyUser.objects.get(id=id).username
+        user_id = MyUser.objects.get(id=id)
+        form = DeleteUserForm(request.POST or None)
+        if request.method == 'POST':
+            if form.is_valid():
+                user_id.delete()
+                return redirect('users')
+    except MyUser.DoesNotExist:
+        title = 'User Not Found'
+        return render(request, 'error/user_not_found.html', {'title':title})
+    return render(
+        request, 
+        'user/delete_user.html', 
+        {'title':title,'user_id':user_id}
+    )
+
+@login_required(login_url='/login/')
+@user_passes_test(lambda u:u.username == 'admin', login_url='/login/')
+def change_permission(request, id):
+    title = 'Change permission for %s' % MyUser.objects.get(id=id).username
+    user_id = request.POST['id']
+    return render(request, '', {'title':title, 'user_id':user_id})
+
 '''
 @login_required(login_url='/login/')
-@user_passes_test(admin_check)
-def delete_user(request ,id):
-    title = 'Delete user'
-    u = get_object_or_404(MyUser, id=id)
-    if request.method == 'POST':
-        form = DeleteUserForm(request.POST, instance=u)
-        if form.is_valid():
-            u.delete()
-            return redirect('users')
-        else:
-            messages.error(request, 'User not found')
-    return render(request, 'delete_user.html', {'title':title, 'form':form})
+@user_passes_test(lambda u:u.view_all, login_url='/login/')
+def edit_user(request, id):
+    title = 'Edit user: %s' % MyUser.objects.get(id=id).username
+    user_id = MyUser.objects.get(id=id)
+    try:
+        title = 'Edit user: %s' % MyUser.objects.get(id=id).username
+    except MyUser.DoesNotExist:
+        title = 'User Not Found'
+        return render(request, 'errors/user_not_found.html', {'title':title})
+    return render(request, 'user/edit_user.html', {'title':title, 'user_id':user_id})
 '''

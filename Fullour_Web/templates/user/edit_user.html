@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="mt-3">
+    <h2>Edit User: </h2>
+    <form action="" method="post">
+            {% csrf_token %}
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <td><label for="id_username">Username: </label></td>
+                    <td><input type="text" id="id_username" name="username" placeholder="Username"></td>
+                </tr>
+                <tr>
+                    <td><label for="id_username">Password: </label></td>
+                    <td><input type="password" id="id_password" name="password" placeholder="Password"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="d-flex justify-content-center">
+                            <input type="submit" value="Login" class="d-flex justify-content-center btn btn-secondary">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+    </form>
+{% endblock %}

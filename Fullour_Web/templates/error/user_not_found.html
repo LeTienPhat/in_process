@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Error 404</title>
+    <title>{{ title }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
@@ -10,24 +10,18 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body style="width: 100%;">
+<body style="background: black">
     <div class="container h-100">
-        <div class="row">
-            <div class="col-sm"></div>
-            <div class="col-sm mt-5">
-                <img src="{% static 'images/hanwha.png' %}" alt="My image">
-                <div class="mt-4">404. That’s an error.</div>
-                <div class="mt-2">
-                    The requested URL {{ current_path }} was not found on this server.
-                </div>
-            </div>
+        <div class="row text-center">
             <div class="col-sm">
-                <img src="{% static 'images/404.jpg' %}" alt="My image">
+                <img class="mt-3" src="{% static 'images/user.png' %}" alt="My image">
+                <h2 class="text-secondary">User Not Found</h2>
+                <h5 class="text-secondary">The user you were looking for could not be found</h3>
+                <a href="{% url 'index' %}"><button type="button" class="btn btn-success mt-3">Return to Homepage</button></a>
             </div>
-            <div class="col-sm"></div>
         </div>
     </div>
-
+    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </body>
 </html>

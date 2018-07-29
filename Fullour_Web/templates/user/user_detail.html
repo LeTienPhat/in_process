@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ user_id.username }}</h1>
+<p>ID request: {{ id }}</p>
+<p>Type of ID: {{ type_id }}</p>
+<p>Request userID: {{ request.user.id }}</p>
+<p>Type of request userID: {{ type_request_userID }}</p>
+{% endblock %}
